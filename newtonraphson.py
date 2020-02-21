@@ -1,6 +1,4 @@
-
-
-""" Write a Python module newtonraphson.py that contains functions to 
+""" Write a Python module newtonraphson.py that contains functions to
 find the roots of an equation for a polynomial in x using the 
 Newton-Raphson method. 
 
@@ -22,9 +20,10 @@ derivatives or evaluating polynomials.
 
 """
 
+
 # Solution Function
 
-def NewtonRaphson(fpoly, a, tolerance = .00001):     
+def NewtonRaphson(fpoly, a, tolerance=.00001):
     """Given a set of polynomial coefficients fpoly 
     for a univariate polynomial function, 
     e.g. (3, 6, 0, -24) for 3x^3 + 6x^2 +0x^1 -24x^0,     
@@ -37,9 +36,17 @@ def NewtonRaphson(fpoly, a, tolerance = .00001):
     This is an iterative method that stops when the     
     change in estimators is less than tolerance.
 """
+    b = a - polyval(fpoly, a) / polyval(derivative(fpoly), a)
+
+    ctr = 0
+    while b != a:
+        original = polyval(fpoly, a-ctr)
+        deriv = polyval(derivative(fpoly), a-ctr)
+
+
 # Auxillary Functions
 
-def polyval(fpoly, x):    
+def polyval(fpoly, x):
     """polyval(fpoly, x)     
     Given a set of polynomial coefficients from highest order to x^0,    
     compute the value of the polynomial at x.  We assume zero     
@@ -49,8 +56,14 @@ def polyval(fpoly, x):
     polyval([4, 0, 9, 3], 5))    
     returns 548    
     """
+    val = 0
+    for i, c in enumerate(fpoly, 1):
+        val += c * x ** (len(fpoly) - i)
 
-def derivative(fpoly):    
+    return val
+
+
+def derivative(fpoly):
     """derivative(fpoly)     
     Given a set of polynomial coefficients from highest order to x^0,    
     compute the derivative polynomial.  We assume zero coefficients     
@@ -61,3 +74,6 @@ def derivative(fpoly):
     derivative((3,4,5))  # 3 * x**2 + 4 * x**1 + 5 * x**0    
     returns:  [6, 4]     # 6 * x**1 + 4 * x**0     
     """
+    deriv = [c * (len(fpoly) - i) for i, c in enumerate(fpoly, 1)]
+
+    return deriv[0:-1]

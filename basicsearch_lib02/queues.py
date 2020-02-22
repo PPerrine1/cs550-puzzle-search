@@ -3,14 +3,10 @@ Queues: Stack, FIFOQueue, PriorityQueue
 '''
 
 import collections  # data containers
-import bisect   # efficient sorted lists
-
-
-
+import bisect  # efficient sorted lists
 
 
 class Queue:
-
     """Queue is an abstract class/interface. There are three types:
         Stack(): A Last In First Out Queue.
         FIFOQueue(): A First In First Out Queue.
@@ -38,7 +34,6 @@ def Stack():
 
 
 class FIFOQueue(Queue):
-
     """A First-In-First-Out Queue."""
 
     def __init__(self, maxlen=None, items=[]):
@@ -70,7 +65,6 @@ class FIFOQueue(Queue):
 
 
 class PriorityQueue(Queue):
-
     """A queue in which the minimum (or maximum) element (as determined by f and
     order) is returned first. If order is min, the item with minimum f(x) is
     returned first; if order is max, then it is the item with maximum f(x).
@@ -105,4 +99,3 @@ class PriorityQueue(Queue):
         for i, (value, item) in enumerate(self.A):
             if item == key:
                 self.A.pop(i)
-

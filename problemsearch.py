@@ -1,11 +1,12 @@
-'''
+"""
 problemsearch - Functions for seaarching.
-'''
+"""
 
 from basicsearch_lib02.searchrep import (Node, print_nodes)
-from basicsearch_lib02.queues import PriorityQueue 
+from basicsearch_lib02.queues import PriorityQueue
 from explored import Explored
-        
+
+
 def graph_search(problem, verbose=False, debug=False):
     """graph_search(problem, verbose, debug) - Given a problem representation
     (instance of basicsearch_lib02.representation.Problem or derived class),

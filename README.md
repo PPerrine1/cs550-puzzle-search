@@ -17,7 +17,6 @@ Running the 31 trials will take a little bit of time, so use a much smaller numb
 
 * a plan (list of actions) 
 * the number of nodes that were expanded. 
-* the amount of time the search took 
 
 You will need to use a priority queue and search nodes (see below)
 

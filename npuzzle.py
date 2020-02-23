@@ -18,14 +18,8 @@ class NPuzzle(Problem):
         The parent's class constructor is then called with the TileBoard
         instance and any remaining arguments captured in **kwargs.
         """
-        # TODO: Partially completed class to represent the problem, derived from a generic Problem representation in
-        #  basicsearch_lib02.searchrep. Complete the skeleton code that is provided for you. When you create a
-        #  problem to be searched, you should create an instance of this class which will contain an instance of
-        #  TileBoard. The parent class, Problem, accepts two keyword arguments that you will need to use (don’t
-        #  forget to call super): g and h. g is a cost function and h is a heuristic function. See descriptions in
-        #  modules searchstrategies specified below. You can pass a function handle by using the name of the
-        #  function, e.g. g=BreadthFist.g.
-        npuzzle = TileBoard(self, n, force_state)
+        # Instantiate Tileboard
+        npuzzle = TileBoard(n, force_state)
 
         # Initialize parent class, Problem
         super().__init__(npuzzle.state_tuple, npuzzle.goals, kwargs["g"], kwargs["h"])
@@ -37,19 +31,14 @@ class NPuzzle(Problem):
         # as if each entry was a keyword argument:
         #    e.g. foobar(arg1, arg2, …, argn, **kwargs).
 
-        raise NotImplemented
-
     def actions(self, state):
         """actions(state) - find a set of actions applicable to specified state"""
-
-        raise NotImplemented
+        return state.get_actions
 
     def result(self, state, action):
         """result(state, action)- apply action to state and return new state"""
-
-        raise NotImplemented
+        return state.move(action)
 
     def goal_test(self, state):
         """goal_test(state) - Is state a goal?"""
-
-        raise NotImplemented
+        return state.solved

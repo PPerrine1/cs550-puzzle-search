@@ -84,8 +84,6 @@ def driver():
     print("Mean Time")
     print("St Dev Time")
 
-    raise NotImplemented
-
 
 if __name__ == '__main__':
     driver()

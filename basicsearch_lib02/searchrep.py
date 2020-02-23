@@ -11,7 +11,7 @@ Contains contributions from multiple authors
 
 
 def print_nodes(nodes):
-    """print_nodes(nodes) - display a set of search nodes on the same line"""
+    "print_nodes(nodes) - display a set of search nodes on the same line"
 
     if len(nodes) > 0:
         nodereps = []  # string representation of each node
@@ -81,8 +81,7 @@ class Problem(object):
         state. The result would typically be a list, but if there are
         many actions, consider yielding them one at a time in an
         iterator, rather than building them all at once."""
-
-        return state.get_actions()
+        raise NotImplementedError
 
     def result(self, state, action):
         """Return the state that results from executing the given
@@ -94,7 +93,7 @@ class Problem(object):
         """Return True if the state is a goal. The default method checks if
         state is one of the constructor specified goals. Override this
         method if checking against a list of goals is not sufficient."""
-        return state in self.goals
+        raise NotImplementedError
 
     def value(self, state):
         """For optimization problems, each state has a value.  Hill-climbing
@@ -117,7 +116,7 @@ class Node:
     """
 
     def __init__(self, problem, state, parent=None, action=None):
-        """Create a search tree Node, derived from a parent by an action."""
+        "Create a search tree Node, derived from a parent by an action."
         self.problem = problem  # Save problem representation
         self.state = state
         self.parent = parent
@@ -137,7 +136,7 @@ class Node:
         self.f = self.g + self.h
 
     def expand(self, problem):
-        """List the nodes reachable in one step from this node."""
+        "List the nodes reachable in one step from this node."
         return [self.child_node(action)
                 for action in problem.actions(self.state)]
 

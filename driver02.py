@@ -47,21 +47,21 @@ def driver():
 
     for trials in range(ntrials):
         bt = Timer()
-        breadthpuzzle = NPuzzle(n, BreadthFirst.g, BreadthFirst.h)
+        breadthpuzzle = NPuzzle(n, g=BreadthFirst.g, h=BreadthFirst.h)
         bsearch = graph_search(breadthpuzzle)
         bsteps.append(bsearch[0])
         bnodes.append(bsearch[1])
         btime.append(bt.elapsed_s)
 
         dt = Timer()
-        depthpuzzle = NPuzzle(n, DepthFirst.g, DepthFirst.h)
+        depthpuzzle = NPuzzle(n, g=DepthFirst.g, h=DepthFirst.h)
         dsearch = graph_search(depthpuzzle)
         dsteps.append(dsearch[0])
         dnodes.append(dsearch[1])
         dtime.append(dt.elapsed_s)
 
         at = Timer()
-        astarpuzzle = NPuzzle(n, Manhattan.g, Manhattan.h)
+        astarpuzzle = NPuzzle(n, g=Manhattan.g, h=Manhattan.h)
         asearch = graph_search(astarpuzzle)
         asteps.append(asearch[0])
         anodes.append(asearch[1])

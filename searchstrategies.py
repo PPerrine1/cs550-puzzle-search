@@ -63,9 +63,7 @@ class BreadthFirst:
 
     @classmethod
     def g(cls, parentnode, action, childnode):
-        gval = 0
-        # TODO
-        return gval
+        return 1 + parentnode.get_g()
 
     @classmethod
     def h(cls, state):
@@ -79,13 +77,12 @@ class DepthFirst:
 
     @classmethod
     def g(cls, parentnode, action, childnode):
-        gval = 0
-        # TODO
-        return gval
+        return 1 + parentnode.get_g()
 
     @classmethod
     def h(cls, state):
         hval = 0
+
         # TODO
         return hval
 
@@ -95,12 +92,12 @@ class Manhattan:
 
     @classmethod
     def g(cls, parentnode, action, childnode):
-        gval = 0
-        # TODO
-        return gval
+        return 1 + parentnode.get_g()
 
     @classmethod
     def h(cls, state):
-        hval = 0
-        # TODO
+        rows, cols = state.get_rows, cols = state.get_cols
+        hval = sum(abs((tile % cols) - (i % cols)) +
+                   abs((tile // rows) - (i // rows))
+                   for i, tile in enumerate(state.state_tuple()) if tile)
         return hval

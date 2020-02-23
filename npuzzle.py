@@ -28,7 +28,7 @@ class NPuzzle(Problem):
         npuzzle = TileBoard(self, n, force_state)
 
         # Initialize parent class, Problem
-        super().__init__(npuzzle.state_tuple, npuzzle.goals, kwargs)
+        super().__init__(npuzzle.state_tuple, npuzzle.goals, kwargs["g"], kwargs["h"])
 
         # Note on **kwargs:
         # **kwargs is Python construct that captures any remaining arguments 

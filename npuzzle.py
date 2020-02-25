@@ -94,7 +94,6 @@ class NPuzzle(Problem):
                 rprime >= n or cprime >= n:
             raise ValueError("Illegal move (%d,%d) from (%d,%d)" % (
                 delta_r, delta_c, r, c))
-        print("rprime: ", rprime, "r:", r, "cprime:", cprime, "c", c)
 
         # Apply move offset accordingly
         if delta_r != 0:

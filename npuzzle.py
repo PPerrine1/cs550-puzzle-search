@@ -33,12 +33,24 @@ class NPuzzle(Problem):
 
     def actions(self, state):
         """actions(state) - find a set of actions applicable to specified state"""
-        
         actions = []
         # check row and column, no diagonal moves allowed
         boarddims = [self.puzzle.get_rows(), self.puzzle.get_cols()]
+        state_list = [state[i:i + boarddims[0]] for i in range(0, len(state), boarddims[0])]
+
+        # find empty tile coordinates
+        found = False
+        for x in range(len(state_list)):
+            for y in range(len(state_list[x])):
+                if state_list[x][y] is None:
+                    empty = [x, y]
+                    found = True
+                    break
+            if found:
+                break
+
         for dim in [0, 1]:  # rows, then columns
-            # Append offsets to the actions list, 
+            # Append offsets to the actions list,
             # e.g. move left --> (-1,0)
             #      move down --> (0, 1)
             # Note that when we append to the list of actions,
@@ -47,51 +59,62 @@ class NPuzzle(Problem):
             # will change copies in the list.
             offset = [0, 0]
             # add if we don't go off the top or left
-            empty_tile_index = state.index(None)
-            if empty_tile_index - 1 >= 0:
+            if empty[dim] - 1 >= 0:
                 offset[dim] = -1
                 actions.append(list(offset))
             # append if we don't go off the bottom or right
-            if empty_tile_index + 1 < boarddims[dim]:
+            if empty[dim] + 1 < boarddims[dim]:
                 offset[dim] = 1
                 actions.append(list(offset))
 
+        print(actions)
         return actions
 
     def result(self, state, action):
         """result(state, action)- apply action to state and return new state"""
+        n = self.puzzle.get_rows()
+        state_list = [list(state[i:i + n]) for i in range(0, len(state), n)]
 
-        # Create a deep copy of the current board
-        new_b = copy.deepcopy(self.puzzle)
-
-        # Search for empty tile's coordinates (NOT index) using the deep copy
         found = False
-        for x in range(len(new_b.board)):
-            for y in range(len(new_b.board[x])):
-                if new_b.board[x][y] is None:
-                    empty_t = [x, y]
+        for x in range(len(state_list)):
+            for y in range(len(state_list[x])):
+                if state_list[x][y] is None:
+                    (r, c) = [x, y]
                     found = True
                     break
             if found:
                 break
-        
+
+        [delta_r, delta_c] = action
+
+        # validate
+        rprime = r + delta_r
+        cprime = c + delta_c
+        if rprime < 0 or cprime < 0 or \
+                rprime >= self.puzzle.get_rows() or cprime >= self.puzzle.get_cols():
+            raise ValueError("Illegal move (%d,%d) from (%d,%d)" % (
+                delta_r, delta_c, r, c))
+
         # Apply move offset accordingly
-        if offset[0] != 0:
+        if r != 0:
             # Move up or down
-            new_b.board[empty_t[0]][empty_t[1]] = new_b.board[empty_t[0] + offset[0]][empty_t[1]]
-            new_b.board[empty_t[0] + offset[0]][empty_t[1]] = None
-        elif offset[1] != 0:
+            state_list[r][c] = state_list[r + delta_r][c]
+            state_list[r + delta_r][c] = None
+        elif c != 0:
             # Move left or right
-            new_b.board[empty_t[0]][empty_t[1]] = new_b.board[empty_t[0]][empty_t[1] + offset[1]]
-            new_b.board[empty_t[0]][empty_t[1] + offset[1]] = None
+            state_list[r][c] = state_list[r][c + delta_c]
+            state_list[r][c + delta_c] = None
 
-        # Return our shifted board to be assigned
-        return new_b
-
-        return state.move(action)
+        new_state = [item for sublist in state_list
+                     for item in sublist]
+        # convert to tuple (hashable) and return
+        return tuple(new_state)
 
     def goal_test(self, state):
         """goal_test(state) - Is state a goal?"""
 
-        goal = state in puzzle.goals
+        goal = state in self.puzzle.goals
         return goal
+
+    def value(self, state):
+        pass

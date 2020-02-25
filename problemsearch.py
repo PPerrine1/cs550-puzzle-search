@@ -8,7 +8,7 @@ from explored import Explored
 
 
 def graph_search(problem, verbose=False, debug=False):
-      """graph_search(problem, verbose, debug) - Given a problem representation
+    """graph_search(problem, verbose, debug) - Given a problem representation
       (instance of basicsearch_lib02.representation.Problem or derived class),
       attempt to solve the problem.
       
@@ -68,27 +68,31 @@ def graph_search(problem, verbose=False, debug=False):
       path - list of actions to solve the problem or None if no solution was found
       nodes_explored - Number of nodes explored (dequeued from frontier)
       """
-      initial_node = Node(problem, problem.puzzle.state_tuple())
-      frontier = PriorityQueue()
-      frontier.append(initial_node)
+    initial_node = Node(problem, problem.puzzle.state_tuple())
+    frontier = PriorityQueue()
+    frontier.append(initial_node)
 
-      done = found = False
-      explored = Explored()
-      while not done:
-            node = frontier.pop()
-            explored.add(node)
-            if goal_test(node.state):
-                  found = done = True
-            else:
-                  for act in problem.actions(node.state):
-                        if not frontier.__contains__(act) and not explored.exists(act):
-                              # Need to change the puzzle state here
-                              frontier.append(Node(problem, problem.puzzle.state_tuple(), node, act))
+    done = found = False
+    explored = Explored()
+    if verbose:
+        print(problem.puzzle)
+    while not done:
+        node = frontier.pop()
+        state = node.state
+        explored.add(state)
+
+        if problem.goal_test(state):
+            found = done = True
+        else:
+            for act in problem.actions(state):
+                next_node = problem.result(state, act)
+                if next_node not in frontier and not explored.exists(next_node):
+                    # Need to change the puzzle state here
+                    frontier.append(node.child_node(act))
+                    print(act, node)
 
 
-                              
-
-      """
+    """
       frontier = problem.initial_state()
       done = found = False
       explored = {} # keep track of nodes we have checked
@@ -105,4 +109,4 @@ def graph_search(problem, verbose=False, debug=False):
       return solution if found else return failure
       """
 
-    #raise NotImplemented
+# raise NotImplemented

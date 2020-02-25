@@ -11,7 +11,7 @@ Contains contributions from multiple authors
 
 
 def print_nodes(nodes):
-    "print_nodes(nodes) - display a set of search nodes on the same line"
+    """print_nodes(nodes) - display a set of search nodes on the same line"""
 
     if len(nodes) > 0:
         nodereps = []  # string representation of each node

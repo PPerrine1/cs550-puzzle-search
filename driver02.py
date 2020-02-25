@@ -38,7 +38,7 @@ class Timer:
 
 
 def driver():
-    ntrials = 3
+    ntrials = 1
     n = 8
 
     btime, dtime, atime = [], [], []
@@ -46,23 +46,23 @@ def driver():
     bsteps, dsteps, asteps = [], [], []
 
     for trials in range(ntrials):
-        bt = Timer()
-        breadthpuzzle = NPuzzle(n, g=BreadthFirst.g, h=BreadthFirst.h)
-        bsearch = graph_search(breadthpuzzle)
-        bsteps.append(bsearch[0])
-        bnodes.append(bsearch[1])
-        btime.append(bt.elapsed_s)
-
-        dt = Timer()
-        depthpuzzle = NPuzzle(n, g=DepthFirst.g, h=DepthFirst.h)
-        dsearch = graph_search(depthpuzzle)
-        dsteps.append(dsearch[0])
-        dnodes.append(dsearch[1])
-        dtime.append(dt.elapsed_s)
+        # bt = Timer()
+        # breadthpuzzle = NPuzzle(n, g=BreadthFirst.g, h=BreadthFirst.h)
+        # bsearch = graph_search(breadthpuzzle, verbose=True)
+        # bsteps.append(bsearch[0])
+        # bnodes.append(bsearch[1])
+        # btime.append(bt.elapsed_s)
+        #
+        # dt = Timer()
+        # depthpuzzle = NPuzzle(n, g=DepthFirst.g, h=DepthFirst.h)
+        # dsearch = graph_search(depthpuzzle, verbose=True)
+        # dsteps.append(dsearch[0])
+        # dnodes.append(dsearch[1])
+        # dtime.append(dt.elapsed_s)
 
         at = Timer()
         astarpuzzle = NPuzzle(n, g=Manhattan.g, h=Manhattan.h)
-        asearch = graph_search(astarpuzzle)
+        asearch = graph_search(astarpuzzle, verbose=True)
         asteps.append(asearch[0])
         anodes.append(asearch[1])
         atime.append(at.elapsed_s)

@@ -82,7 +82,6 @@ class DepthFirst:
     @classmethod
     def h(cls, state):
         hval = 0
-
         # TODO
         return hval
 
@@ -96,8 +95,8 @@ class Manhattan:
 
     @classmethod
     def h(cls, state):
-        rows, cols = state.get_rows, cols = state.get_cols
-        hval = sum(abs((tile % cols) - (i % cols)) +
-                   abs((tile // rows) - (i // rows))
-                   for i, tile in enumerate(state.state_tuple()) if tile)
+        dim = math.sqrt(len(state))
+        hval = sum(abs((tile % dim) - (i % dim)) +
+                   abs((tile // dim) - (i // dim))
+                   for i, tile in enumerate(state) if tile)
         return hval

@@ -9,7 +9,7 @@ class Explored(object):
 
     def __init__(self):
         """__init__() - Create an empty explored set"""
-        explored = {}
+        self.explored = {}
 
     def exists(self, state):
         """exists(state) - Has this state already been explored?

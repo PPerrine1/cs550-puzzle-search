@@ -38,9 +38,9 @@ class Timer:
 
 def driver():
     # Assign number of trials, size of tileboards, and set verbose / debug flags, and force_states
-    ntrials = 1
+    ntrials = 2
     n = 8
-    verbose, debug = False, True
+    verbose, debug = True, False
 
     f_state = []
 
@@ -58,7 +58,6 @@ def driver():
                 made = done = True
             else:
                 # Reshuffle temporary state if not solvable
-                print("Reshuffling.")
                 random.shuffle(tmp_state)
             if made:
                 # If solvable, append to f_state list
@@ -76,13 +75,13 @@ def driver():
         # Create puzzle with same initial state & costs specific to search type
         # Run graph search on created puzzle
         # Add stats to stat arrays
-        # print(f_state)
-        # bt = Timer()
-        # breadthpuzzle = NPuzzle(n, force_state=state, g=BreadthFirst.g, h=BreadthFirst.h)
-        # bsearch = graph_search(breadthpuzzle, verbose, debug)
-        # bsteps.append(len(bsearch[0]))
-        # bnodes.append(bsearch[1])
-        # btime.append(bt.elapsed_s())
+
+        bt = Timer()
+        breadthpuzzle = NPuzzle(n, force_state=state, g=BreadthFirst.g, h=BreadthFirst.h)
+        bsearch = graph_search(breadthpuzzle, verbose, debug)
+        bsteps.append(len(bsearch[0]))
+        bnodes.append(bsearch[1])
+        btime.append(bt.elapsed_s())
 
         dt = Timer()
         depthpuzzle = NPuzzle(n, force_state=state, g=DepthFirst.h, h=DepthFirst.g)

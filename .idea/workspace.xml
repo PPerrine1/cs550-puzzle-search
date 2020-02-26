@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="460b97f6-dd15-4074-91f2-2e288325c406" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/basicsearch_lib02/queues.py" beforeDir="false" afterPath="$PROJECT_DIR$/basicsearch_lib02/queues.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/driver02.py" beforeDir="false" afterPath="$PROJECT_DIR$/driver02.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/explored.py" beforeDir="false" afterPath="$PROJECT_DIR$/explored.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newtonraphson.py" beforeDir="false" afterPath="$PROJECT_DIR$/newtonraphson.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/npuzzle.py" beforeDir="false" afterPath="$PROJECT_DIR$/npuzzle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problemsearch.py" beforeDir="false" afterPath="$PROJECT_DIR$/problemsearch.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +22,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../cs550-tileboard/tileboard.py" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
     <configuration name="driver02" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -116,6 +112,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1515" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1582682778780" />
+    <state x="277" y="55" key="SettingsEditor" timestamp="1582698578257">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1582698578257" />
     <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1582593199692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

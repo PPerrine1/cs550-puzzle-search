@@ -1,6 +1,3 @@
-!pip install gmpy2
-from gmpy2 import *
-
 def NewtonRaphson(fpoly, a, tolerance=.00001):
     """Given a set of polynomial coefficients fpoly
     for a univariate polynomial function,
@@ -59,6 +56,7 @@ def derivative(fpoly):
     """
     deriv = [c * (len(fpoly) - i) for i, c in enumerate(fpoly, 1)]
     return deriv[0:2]
+
 
 if __name__ == '__main__':
     print(NewtonRaphson([4, 0, 9, 3], 5))

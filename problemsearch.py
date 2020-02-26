@@ -69,57 +69,44 @@ def graph_search(problem, verbose=False, debug=False):
       nodes_explored - Number of nodes explored (dequeued from frontier)
       """
     initial_node = Node(problem, problem.puzzle.state_tuple())
-    nodes_explored = 0
     frontier = PriorityQueue()
     frontier.append(initial_node)
 
-    done = found = False
     explored = Explored()
+    nodes_explored = 0
 
+    done = found = False
     while not done:
         node = frontier.pop()
+        if debug:
+            print("Node:", node)
+            print("Frontier:", frontier)
+
         state = node.state
         explored.add(state)
         nodes_explored += 1
+
         if problem.goal_test(state):
             found = done = True
         else:
             for act in problem.actions(state):
                 next_state = problem.result(state, act)
                 if next_state not in frontier and not explored.exists(next_state):
-                    # Need to change the puzzle state here
                     frontier.append(node.child_node(act))
-                    # done = frontier.is_empty()
 
     if not found:
         print("No solution found.")
     else:
         if verbose:
-            print("Solution in",len(node.solution()),"moves")
+            print("Solution in", len(node.solution()), "moves")
             print(problem.puzzle)
-            for i,act in enumerate(node.solution()):
-                  problem.puzzle = problem.puzzle.move(act)
-                  act.reverse()
-                  print("Move",i+1,"-",act)
-                  print(problem.puzzle)
+            for i, act in enumerate(node.solution()):
+                problem.puzzle = problem.puzzle.move(act)
+                act.reverse()
+                print("Move", i + 1, "-", act)
+                print(problem.puzzle)
 
-        return (node.solution(), nodes_explored)
+        if debug:
+            print("*" * 10, "Win")
 
-    """
-      frontier = problem.initial_state()
-      done = found = False
-      explored = {} # keep track of nodes we have checked
-      while not done
-      node = frontier.get_node() # remove state
-      explored = union(explored, node)
-      if node in problem.goals()
-      found = done = True
-      else
-      # only add novel results from the current node
-      nodes = setdiff(results from actions(node), union(frontier,explored))
-      frontier.add_nodes(nodes)
-      done = frontier.is_empty()
-      return solution if found else return failure
-      """
-
-# raise NotImplemented
+        return node.solution(), nodes_explored

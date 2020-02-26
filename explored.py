@@ -28,6 +28,7 @@ class Explored(object):
             self.explored[hash(state)].append(state)
         else:
             self.explored[hash(state)] = [state]
+
         # The hash function is a Python builtin that generates
         # a hash value from its argument.  Use this to create
         # a dictionary key.  Handle collisions by storing 

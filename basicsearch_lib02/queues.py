@@ -100,3 +100,5 @@ class PriorityQueue(Queue):
             if item == key:
                 self.A.pop(i)
 
+    def __repr__(self):
+        return str(self.A)

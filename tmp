@@ -1,3 +1,0 @@
-    adata = [mean(asteps), stdev(asteps, mean(asteps)),
-             mean(anodes), stdev(anodes, mean(anodes)),
-             mean(atime), stdev(atime, mean(atime))]

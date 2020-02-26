@@ -19,7 +19,7 @@ class NPuzzle(Problem):
         instance and any remaining arguments captured in **kwargs.
         """
         # Instantiate Tileboard
-        self.puzzle = TileBoard(n, force_state)
+        self.puzzle = TileBoard(n, force_state=force_state)
 
         # Initialize parent class, Problem
         super().__init__(self.puzzle.state_tuple(), self.puzzle.goals, kwargs["g"], kwargs["h"])
@@ -115,6 +115,5 @@ class NPuzzle(Problem):
         goal = state in self.puzzle.goals
         return goal
 
-    #def value(self, state):
-
-     #   pass
+    def value(self, state):
+        pass

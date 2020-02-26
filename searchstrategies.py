@@ -94,12 +94,13 @@ class Manhattan:
 
         # Here we use Manhattan heuristic
         # First find dimensions of state tuple
-        dim = math.sqrt(len(state))
+        dim = int(math.sqrt(len(state)))
         # For each tile:
         # Find column and row distance from
         # current location to desired location
-        hval = sum(abs((tile % dim) - (i % dim)) +
-                   abs((tile // dim) - (i // dim))
+        hval = sum(abs(((tile - 1) % dim) - (i % dim)) +
+                   abs(((tile - 1) // dim) - (i // dim))
                    for i, tile in enumerate(state) if tile)
+
         # Return the sum of distances for all tiles
         return hval

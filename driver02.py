@@ -38,7 +38,7 @@ class Timer:
 
 def driver():
     # Assign number of trials, size of tileboards, and set verbose / debug flags, and force_states
-    ntrials = 2
+    ntrials = 1
     n = 8
     verbose, debug = False, True
 
@@ -76,20 +76,20 @@ def driver():
         # Create puzzle with same initial state & costs specific to search type
         # Run graph search on created puzzle
         # Add stats to stat arrays
-        print(f_state)
-        bt = Timer()
-        breadthpuzzle = NPuzzle(n, force_state=state, g=BreadthFirst.g, h=BreadthFirst.h)
-        bsearch = graph_search(breadthpuzzle, verbose, debug)
-        bsteps.append(len(bsearch[0]))
-        bnodes.append(bsearch[1])
-        btime.append(bt.elapsed_s())
-
-        dt = Timer()
-        depthpuzzle = NPuzzle(n, force_state=state, g=DepthFirst.h, h=DepthFirst.g)
-        dsearch = graph_search(depthpuzzle, verbose, debug)
-        dsteps.append(len(dsearch[0]))
-        dnodes.append(dsearch[1])
-        dtime.append(dt.elapsed_s())
+        # print(f_state)
+        # bt = Timer()
+        # breadthpuzzle = NPuzzle(n, force_state=state, g=BreadthFirst.g, h=BreadthFirst.h)
+        # bsearch = graph_search(breadthpuzzle, verbose, debug)
+        # bsteps.append(len(bsearch[0]))
+        # bnodes.append(bsearch[1])
+        # btime.append(bt.elapsed_s())
+        #
+        # dt = Timer()
+        # depthpuzzle = NPuzzle(n, force_state=state, g=DepthFirst.h, h=DepthFirst.g)
+        # dsearch = graph_search(depthpuzzle, verbose, debug)
+        # dsteps.append(len(dsearch[0]))
+        # dnodes.append(dsearch[1])
+        # dtime.append(dt.elapsed_s())
 
         at = Timer()
         astarpuzzle = NPuzzle(n, force_state=state, g=Manhattan.g, h=Manhattan.h)

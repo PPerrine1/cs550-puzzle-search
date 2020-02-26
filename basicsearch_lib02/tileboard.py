@@ -170,8 +170,8 @@ class TileBoard(Board):
         boarddims = [self.get_rows(), self.get_cols()]
         for dim in [0, 1]:  # rows, then columns
             # Append offsets to the actions list, 
-            # e.g. move left --> (-1,0)
-            #      move down --> (0, 1)
+            # e.g. move left --> (0,-1)
+            #      move down --> (1,0)
             # Note that when we append to the list of actions,
             # we use list( ) to make a copy of the list, otherwise
             # we just get a pointer to it and modification of offset

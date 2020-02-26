@@ -51,10 +51,14 @@ class BreadthFirst:
 
     @classmethod
     def g(cls, parentnode, action, childnode):
+        # Breadth search:
+        # g = cost
         return 1 + parentnode.get_g()
 
     @classmethod
     def h(cls, state):
+        # Breadth search:
+        # h = k
         return 0
 
 
@@ -63,10 +67,14 @@ class DepthFirst:
 
     @classmethod
     def h(cls, parentnode, action, childnode):
+        # For depth search, g and h were swapped.
+        # h = -depth(n)
         return parentnode.get_h() - 1
 
     @classmethod
     def g(cls, state):
+        # For depth search, g and h were swapped.
+        # g = k
         return 0
 
 
@@ -75,12 +83,23 @@ class Manhattan:
 
     @classmethod
     def g(cls, parentnode, action, childnode):
+        # A* search:
+        # g = cost
         return 1 + parentnode.get_g()
 
     @classmethod
     def h(cls, state):
+        # A* search:
+        # h = estimated cost to goal
+
+        # Here we use Manhattan heuristic
+        # First find dimensions of state tuple
         dim = math.sqrt(len(state))
+        # For each tile:
+        # Find column and row distance from
+        # current location to desired location
         hval = sum(abs((tile % dim) - (i % dim)) +
                    abs((tile // dim) - (i // dim))
                    for i, tile in enumerate(state) if tile)
+        # Return the sum of distances for all tiles
         return hval

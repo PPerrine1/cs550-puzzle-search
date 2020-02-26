@@ -68,46 +68,61 @@ def graph_search(problem, verbose=False, debug=False):
       path - list of actions to solve the problem or None if no solution was found
       nodes_explored - Number of nodes explored (dequeued from frontier)
       """
+
+    # Create initial node as starting point and add to frontier
     initial_node = Node(problem, problem.puzzle.state_tuple())
     frontier = PriorityQueue()
     frontier.append(initial_node)
 
+    # Create explored set and initialize variable to track nodes expanded
     explored = Explored()
-    nodes_explored = 0
+    nodes_expanded = 0
 
+    # Run while loop until graph search is complete
     done = found = False
     while not done:
+        # Pop next node from frontier priority queue
         node = frontier.pop()
         if debug:
-            print("Node:", node)
-
+            print("Node:", node)  # View node for debugging purposes
+        # Add current node state to explored set
         state = node.state
         explored.add(state)
-        nodes_explored += 1
 
         if problem.goal_test(state):
+            # If goal found, exit while loop and return
             found = done = True
         else:
+            # If goal not found, loop through possible actions depending on state
             for act in problem.actions(state):
                 next_state = problem.result(state, act)
                 next_node = node.child_node(act)
+                # Check if next node after action is in frontier queue or explored set
                 if next_node not in frontier:
                     if not explored.exists(next_state):
+                        # If not, add to frontier and track the node as expanded
                         frontier.append(node.child_node(act))
+                        nodes_expanded += 1
+
+        done = len(frontier.is_empty) <= 0  # Exit loop if frontier is empty
 
     if not found:
         print("No solution found.")
+        # This should not happen, we check if board is solvable in Tileboard class
     else:
         if verbose:
+            # If verbose, print puzzle states and actions in path to solution
             print("Solution in", len(node.solution()), "moves")
             print(problem.puzzle)
+
+            # Loop through each action in path
             for i, act in enumerate(node.solution()):
                 problem.puzzle = problem.puzzle.move(act)
-                act.reverse()
+                # Display move taken and resulting puzzle board
                 print("Move", i + 1, "-", act)
                 print(problem.puzzle)
 
         if debug:
-            print("*" * 10, "Win")
+            print("*" * 10, "Win")  # Divider for visualization during debugging
 
-        return node.solution(), nodes_explored
+        return node.solution(), nodes_expanded

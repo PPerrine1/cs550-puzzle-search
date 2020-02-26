@@ -34,36 +34,37 @@ class NPuzzle(Problem):
 
     def actions(self, state):
         """actions(state) - find a set of actions applicable to specified state"""
-        actions = []
-        # check row and column, no diagonal moves allowed
+        # Convert state tuple to 2D list
         boarddims = [self.puzzle.get_rows(), self.puzzle.get_cols()]
         state_list = [state[i:i + boarddims[0]] for i in range(0, len(state), boarddims[0])]
 
-        # find empty tile coordinates
+        # Find empty tile coordinates
         found = False
-        for x in range(len(state_list)):
-            for y in range(len(state_list[x])):
-                if state_list[x][y] is None:
-                    empty = [x, y]
+        for y in range(len(state_list)):
+            for x in range(len(state_list[y])):
+                if state_list[y][x] is None:
+                    empty = [y, x]
                     found = True
                     break
             if found:
                 break
 
+        actions = []  # Initialize empty list for actions
+
         for dim in [0, 1]:  # rows, then columns
             # Append offsets to the actions list,
-            # e.g. move left --> (-1,0)
-            #      move down --> (0, 1)
+            # e.g. move left --> (0, -1)
+            #      move down --> (1, 0)
             # Note that when we append to the list of actions,
             # we use list( ) to make a copy of the list, otherwise
             # we just get a pointer to it and modification of offset
             # will change copies in the list.
             offset = [0, 0]
-            # add if we don't go off the top or left
+            # Add if we don't go off the top or left
             if empty[dim] - 1 >= 0:
                 offset[dim] = -1
                 actions.append(list(offset))
-            # append if we don't go off the bottom or right
+            # Append if we don't go off the bottom or right
             if empty[dim] + 1 < boarddims[dim]:
                 offset[dim] = 1
                 actions.append(list(offset))
@@ -72,15 +73,17 @@ class NPuzzle(Problem):
 
     def result(self, state, action):
         """result(state, action)- apply action to state and return new state"""
+        # Convert tuple into 2D list
         n = self.puzzle.get_rows()
         state_list = [list(state[i:i + n]) for i in range(0, len(state), n)]
 
+        # Find empty tile coordinates
         r = c = 0
         found = False
-        for x in range(len(state_list)):
-            for y in range(len(state_list[x])):
-                if state_list[x][y] is None:
-                    r, c = x, y
+        for y in range(len(state_list)):
+            for x in range(len(state_list[y])):
+                if state_list[y][x] is None:
+                    r, c = y, x
                     found = True
                     break
             if found:
@@ -88,7 +91,7 @@ class NPuzzle(Problem):
 
         [delta_r, delta_c] = action
 
-        # validate
+        # Validate actions
         rprime = r + delta_r
         cprime = c + delta_c
         if rprime < 0 or cprime < 0 or \
@@ -106,13 +109,15 @@ class NPuzzle(Problem):
             state_list[r][c] = state_list[r][cprime]
             state_list[r][cprime] = None
 
+        # Create new state after moving empty
         new_state = [item for sublist in state_list
                      for item in sublist]
-        # convert to tuple (hashable) and return
+        # Convert to tuple (hashable) and return
         return tuple(new_state)
 
     def goal_test(self, state):
         """goal_test(state) - Is state a goal?"""
+        # If state is in puzzle goals, return True
         goal = state in self.puzzle.goals
         return goal
 

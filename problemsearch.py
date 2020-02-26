@@ -68,21 +68,23 @@ def graph_search(problem, verbose=False, debug=False):
       path - list of actions to solve the problem or None if no solution was found
       nodes_explored - Number of nodes explored (dequeued from frontier)
       """
+    # Create explored set and initialize variable to track nodes expanded
+    explored = Explored()
+    frontier = Explored()
+    frontierQ = PriorityQueue()
+    nodes_expanded = 0
 
     # Create initial node as starting point and add to frontier
     initial_node = Node(problem, problem.puzzle.state_tuple())
-    frontier = PriorityQueue()
-    frontier.append(initial_node)
-
-    # Create explored set and initialize variable to track nodes expanded
-    explored = Explored()
-    nodes_expanded = 0
+    frontierQ.append(initial_node)
+    frontier.add(initial_node.state)
+    node = None
 
     # Run while loop until graph search is complete
     done = found = False
     while not done:
         # Pop next node from frontier priority queue
-        node = frontier.pop()
+        node = frontierQ.pop()
         if debug:
             print("Node:", node, "Action", node.action)  # View node for debugging purposes
         # Add current node state to explored set
@@ -98,14 +100,14 @@ def graph_search(problem, verbose=False, debug=False):
                 next_state = problem.result(state, act)
                 next_node = node.child_node(act)
                 # Check if next node after action is in frontier queue or explored set
-                if next_node not in frontier:
-                    if not explored.exists(next_state):
-                        # If not, add to frontier and track the node as expanded
-                        frontier.append(next_node)
-                        nodes_expanded += 1
+                if not explored.exists(next_state) and not frontier.exists(next_state):
+                    # If not, add to frontier and track the node as expanded
+                    frontier.add(next_state)
+                    frontierQ.append(next_node)
+                    nodes_expanded += 1
 
         if not found:
-            done = len(frontier) <= -1  # Exit loop if frontier is empty
+            done = len(frontierQ) <= -1  # Exit loop if frontier is empty
 
     if not found:
         print("No solution found.")

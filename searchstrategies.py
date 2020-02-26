@@ -55,7 +55,7 @@ class BreadthFirst:
         # g = cost
 
         # Find length of parentnode path + 1 to find cost to get to present node
-        return len(parentnode.path()) + 1
+        return parentnode.depth + 1
 
     @classmethod
     def h(cls, state):
@@ -73,7 +73,7 @@ class DepthFirst:
         # h = -depth(n)
 
         # Find length of parentnode path to compute h
-        h = (len(parentnode.path()) + 1) * -1
+        h = (parentnode.depth + 1) * -1
         return h
 
     @classmethod
@@ -91,7 +91,7 @@ class Manhattan:
     def g(cls, parentnode, action, childnode):
         # A* search:
         # g = cost
-        return 1 + parentnode.get_g()
+        return parentnode.depth + 1
 
     @classmethod
     def h(cls, state):

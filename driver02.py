@@ -40,7 +40,7 @@ def driver():
     # Assign number of trials, size of tileboards, and set verbose / debug flags, and force_states
     ntrials = 31
     n = 8
-    verbose, debug = True, True
+    verbose, debug = False, True
 
     f_state = []
 

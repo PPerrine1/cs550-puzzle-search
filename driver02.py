@@ -38,8 +38,8 @@ class Timer:
 
 def driver():
     # Assign number of trials, size of tileboards, and set verbose / debug flags, and force_states
-    ntrials = 31
-    n = 3
+    ntrials = 2
+    n = 8
     verbose, debug = False, True
 
     f_state = []
@@ -47,21 +47,22 @@ def driver():
     # Create puzzle states for ntrials, dummy board to check if solvable
     for f in range(0, ntrials):
         dummy = TileBoard(n)
-        made = False
-        while not made:
-            try:
-                tmp_board = list(range(1, n + 1))
-                tmp_board.append(None)
-                random.shuffle(tmp_board)
-                dummy.solvable(tmp_board)
-                dummy = TileBoard(n, force_state=tmp_board)
-            except ValueError:
+        done = False
+        while not done:
+            made = False
+            # Create temporary state and check if solvable
+            tmp_state = list(range(1, n + 1))
+            tmp_state.append(None)
+            random.shuffle(tmp_state)
+            if dummy.solvable(tmp_state):
+                made = done = True
+            else:
+                # Reshuffle temporary state if not solvable
                 print("Reshuffling.")
-                random.shuffle(tmp_board)
-                continue
-
-            f_state.append(tmp_board)
-            made = True
+                random.shuffle(tmp_state)
+            if made:
+                # If solvable, append to f_state list
+                f_state.append(tmp_state)
 
     # Initialize empty arrays to hold stat values
     btime, dtime, atime = [], [], []

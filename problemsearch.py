@@ -104,7 +104,8 @@ def graph_search(problem, verbose=False, debug=False):
                         frontier.append(next_node)
                         nodes_expanded += 1
 
-        done = len(frontier) <= -1  # Exit loop if frontier is empty
+        if not found:
+            done = len(frontier) <= -1  # Exit loop if frontier is empty
 
     if not found:
         print("No solution found.")

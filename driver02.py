@@ -8,9 +8,8 @@ from npuzzle import NPuzzle
 from basicsearch_lib02.tileboard import TileBoard
 from searchstrategies import (BreadthFirst, DepthFirst, Manhattan)
 from problemsearch import graph_search
-import collections
 import time
-import searchstrategies
+import random
 
 
 class Timer:
@@ -38,11 +37,25 @@ class Timer:
 
 
 def driver():
-    # Assign number of trials, size of tileboards, and set verbose / debug flags or force_state
+    # Assign number of trials, size of tileboards, and set verbose / debug flags, and force_states
     ntrials = 1
     n = 8
-    verbose, debug = False, False
-    # f_state = [1, 2, 3, 4, 5, 6, None, 7, 8]
+    verbose, debug = False, True
+
+    f_state = []
+
+    # Create puzzle states for ntrials, dummy board to check if solvable
+    for f in range(0, ntrials):
+        try:
+            tmp_board = list(range(1, n + 1))
+            tmp_board.append(None)
+            random.shuffle(tmp_board)
+            dummy = TileBoard(n, force_state=tmp_board)
+        except ValueError:
+            print("Reshuffling.")
+            random.shuffle(tmp_board)
+        finally:
+            f_state.append(tmp_board)
 
     # Initialize empty arrays to hold stat values
     btime, dtime, atime = [], [], []
@@ -50,29 +63,29 @@ def driver():
     bsteps, dsteps, asteps = [], [], []
 
     """ Run ntrials: each loop runs a breadth search, 
-        depth search, and A* search """
-    for trials in range(ntrials):
+        depth search, and A* search for each force_state"""
+    for state in f_state:
         # Initialize timer before each search
-        # Create puzzle with costs specific to search type
+        # Create puzzle with same initial state & costs specific to search type
         # Run graph search on created puzzle
         # Add stats to stat arrays
-
+        print(f_state)
         bt = Timer()
-        breadthpuzzle = NPuzzle(n, g=BreadthFirst.g, h=BreadthFirst.h)
+        breadthpuzzle = NPuzzle(n, force_state=state, g=BreadthFirst.g, h=BreadthFirst.h)
         bsearch = graph_search(breadthpuzzle, verbose, debug)
         bsteps.append(len(bsearch[0]))
         bnodes.append(bsearch[1])
         btime.append(bt.elapsed_s())
 
         dt = Timer()
-        depthpuzzle = NPuzzle(n, g=DepthFirst.h, h=DepthFirst.g)
+        depthpuzzle = NPuzzle(n, force_state=state, g=DepthFirst.h, h=DepthFirst.g)
         dsearch = graph_search(depthpuzzle, verbose, debug)
         dsteps.append(len(dsearch[0]))
         dnodes.append(dsearch[1])
         dtime.append(dt.elapsed_s())
 
         at = Timer()
-        astarpuzzle = NPuzzle(n, g=Manhattan.g, h=Manhattan.h)
+        astarpuzzle = NPuzzle(n, force_state=state, g=Manhattan.g, h=Manhattan.h)
         asearch = graph_search(astarpuzzle, verbose, debug)
         asteps.append(len(asearch[0]))
         anodes.append(asearch[1])

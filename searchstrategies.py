@@ -63,7 +63,7 @@ class DepthFirst:
 
     @classmethod
     def h(cls, parentnode, action, childnode):
-        return -1*(parentnode.get_h() + 1)
+        return parentnode.get_h() - 1
 
     @classmethod
     def g(cls, state):

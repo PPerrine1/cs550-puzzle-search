@@ -15,19 +15,22 @@ class Explored(object):
         """exists(state) - Has this state already been explored?
         Returns True or False, state must be hashable
         """
-        if hash(state) in self.explored and state in self.explored[hash(state)]:
+        key = hash(state)  # Store key value
+
+        # Check explored set for key and state
+        if key in self.explored and state in self.explored[key]:
             return True
-        else:
-            return False
+        return False
 
     def add(self, state):
         """add(state) - add given state to the explored set.  
         state must be hashable and we asssume that it is not already in set
         """
-        if hash(state) in self.explored:
-            self.explored[hash(state)].append(state)
-        else:
-            self.explored[hash(state)] = [state]
+        key = hash(state)  # Store key value
+
+        # If key exists, append state.
+        # #Else, create key with empty list and append state.
+        self.explored.setdefault(key, []).append(state)
 
         # The hash function is a Python builtin that generates
         # a hash value from its argument.  Use this to create

@@ -80,7 +80,6 @@ def graph_search(problem, verbose=False, debug=False):
         node = frontier.pop()
         if debug:
             print("Node:", node)
-            print("Frontier:", frontier)
 
         state = node.state
         explored.add(state)
@@ -91,8 +90,10 @@ def graph_search(problem, verbose=False, debug=False):
         else:
             for act in problem.actions(state):
                 next_state = problem.result(state, act)
-                if next_state not in frontier and not explored.exists(next_state):
-                    frontier.append(node.child_node(act))
+                next_node = node.child_node(act)
+                if next_node not in frontier:
+                    if not explored.exists(next_state):
+                        frontier.append(node.child_node(act))
 
     if not found:
         print("No solution found.")
